@@ -28,7 +28,10 @@ class MainActivity : AppCompatActivity() {
                 getContentsInfo()
             } else {
                 // 許可されていないので許可ダイアログを表示する
-                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), PERMISSIONS_REQUEST_CODE)
+                requestPermissions(
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    PERMISSIONS_REQUEST_CODE
+                )
             }
             // Android 5系以下の場合
         } else {
@@ -36,7 +39,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         when (requestCode) {
             PERMISSIONS_REQUEST_CODE ->
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -56,18 +63,64 @@ class MainActivity : AppCompatActivity() {
             null // ソート (null ソートなし)
         )
 
-        if (cursor!!.moveToFirst()) {
-            do {
+        cursor!!.moveToFirst()
+                val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
+                val id = cursor.getLong(fieldIndex)
+                val imageUri =
+                ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+                imageView.setImageURI(imageUri)
+
+
+        start_button.setOnClickListener {
+
+            if (cursor!!.moveToNext()) {
+                //               do {
                 // indexからIDを取得し、そのIDから画像のURIを取得する
                 val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
                 val id = cursor.getLong(fieldIndex)
-                val imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+                val imageUri =
+                    ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
 
-                Log.d("ANDROID", "URI : " + imageUri.toString())
+                Log.d("ANDROID1", "URI : " + imageUri.toString())
+                Log.d("ANDROID1", "URI : " + id.toString())
+                Log.d("ANDROID1", "URI : " + fieldIndex.toString())
                 imageView.setImageURI(imageUri)
-            } while (cursor.moveToNext())
+
+                //               } while (cursor.moveToNext())
+            } else {
+                cursor.moveToFirst()
+            }
+
+            back_button.setOnClickListener {
+
+                if (cursor!!.moveToPrevious()) {
+                    //               do {
+                    // indexからIDを取得し、そのIDから画像のURIを取得する
+                    val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
+                    val id = cursor.getLong(fieldIndex)
+                    val imageUri =
+                        ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+
+                    Log.d("ANDROID1", "URI : " + imageUri.toString())
+                    Log.d("ANDROID1", "URI : " + id.toString())
+                    Log.d("ANDROID1", "URI : " + fieldIndex.toString())
+                    imageView.setImageURI(imageUri)
+
+                    //               } while (cursor.moveToNext())
+                } else {
+                    cursor.moveToLast()
+                }
+
+            }
+
+            ms_button.setOnClickListener{
+                start_button.callOnClick()
+
+
+            }
+
         }
-        cursor.close()
     }
 }
+
 

@@ -21,7 +21,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="400dp"
-        android:text="再生" />
+        android:text="進む" />
 
         <Button
             android:layout_width="100dp"
@@ -30,8 +30,8 @@
             android:layout_marginStart="140dp"
             android:layout_marginEnd="50dp"
             android:layout_marginTop="400dp"
-            android:text="一時停止"
-            android:id="@+id/pause_button"/>
+            android:text="再生／停止"
+            android:id="@+id/ms_button"/>
 
         <Button
             android:layout_width="100dp"
@@ -40,17 +40,17 @@
             android:layout_marginStart="260dp"
             android:layout_marginEnd="30dp"
             android:layout_marginTop="400dp"
-            android:text="リセット"
-            android:id="@+id/reset_button"/>
+            android:text="戻る"
+            android:id="@+id/back_button"/>
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="335dp"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="60dp"/>
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="100dp" />
 
 
 </RelativeLayout>

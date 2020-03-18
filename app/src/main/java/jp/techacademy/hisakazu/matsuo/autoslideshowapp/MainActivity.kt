@@ -63,12 +63,12 @@ class MainActivity : AppCompatActivity() {
             null // ソート (null ソートなし)
         )
 
-        cursor!!.moveToFirst()
-                val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
-                val id = cursor.getLong(fieldIndex)
-                val imageUri =
-                ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
-                imageView.setImageURI(imageUri)
+//        cursor!!.moveToFirst()
+//        val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
+//        val id = cursor.getLong(fieldIndex)
+//        val imageUri =
+//            ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+//        imageView.setImageURI(imageUri)
 
 
         start_button.setOnClickListener {
@@ -82,13 +82,18 @@ class MainActivity : AppCompatActivity() {
                     ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
 
                 Log.d("ANDROID1", "URI : " + imageUri.toString())
-                Log.d("ANDROID1", "URI : " + id.toString())
-                Log.d("ANDROID1", "URI : " + fieldIndex.toString())
                 imageView.setImageURI(imageUri)
 
                 //               } while (cursor.moveToNext())
             } else {
                 cursor.moveToFirst()
+                val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
+                val id = cursor.getLong(fieldIndex)
+                val imageUri =
+                    ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+
+                Log.d("ANDROID1", "URI : " + imageUri.toString())
+                imageView.setImageURI(imageUri)
             }
 
             back_button.setOnClickListener {
@@ -102,18 +107,23 @@ class MainActivity : AppCompatActivity() {
                         ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
 
                     Log.d("ANDROID1", "URI : " + imageUri.toString())
-                    Log.d("ANDROID1", "URI : " + id.toString())
-                    Log.d("ANDROID1", "URI : " + fieldIndex.toString())
                     imageView.setImageURI(imageUri)
 
                     //               } while (cursor.moveToNext())
                 } else {
                     cursor.moveToLast()
+                    val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
+                    val id = cursor.getLong(fieldIndex)
+                    val imageUri =
+                        ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+
+                    Log.d("ANDROID1", "URI : " + imageUri.toString())
+                    imageView.setImageURI(imageUri)
                 }
 
             }
 
-            ms_button.setOnClickListener{
+            ms_button.setOnClickListener {
                 start_button.callOnClick()
 
 
@@ -122,5 +132,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
-

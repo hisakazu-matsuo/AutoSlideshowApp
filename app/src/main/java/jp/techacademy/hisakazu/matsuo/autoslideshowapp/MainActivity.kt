@@ -126,9 +126,7 @@ class MainActivity : AppCompatActivity(){
             mTimer!!.schedule(object:TimerTask() {
                 override fun run() {
                     mHandler.post {
-                            for (i in 1..10)
                                 start_button.callOnClick()
-                        imageView.setImageURI(imageUri)
                               }
                     }
                 },2000,2000)

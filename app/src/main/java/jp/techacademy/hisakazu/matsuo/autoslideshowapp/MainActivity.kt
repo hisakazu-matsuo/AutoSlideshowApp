@@ -93,6 +93,7 @@ class MainActivity : AppCompatActivity(){
                 Log.d("ANDROID1", "URI : " + id.toString())
                 imageView.setImageURI(imageUri)
             }
+            }
 
             back_button.setOnClickListener {
 
@@ -133,4 +134,3 @@ class MainActivity : AppCompatActivity(){
             }
         }
     }
-}

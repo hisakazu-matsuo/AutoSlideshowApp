@@ -8,11 +8,13 @@ import android.os.Build
 import android.util.Log
 import android.provider.MediaStore
 import android.content.ContentUris
+import android.os.Handler
 import android.widget.ImageView
 import jp.techacademy.hisakazu.matsuo.autoslideshowapp.R
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
     private val PERMISSIONS_REQUEST_CODE = 100
 
@@ -63,72 +65,74 @@ class MainActivity : AppCompatActivity() {
             null // ソート (null ソートなし)
         )
 
-//        cursor!!.moveToFirst()
-//        val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
-//        val id = cursor.getLong(fieldIndex)
-//        val imageUri =
-//            ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
-//        imageView.setImageURI(imageUri)
+        cursor!!.moveToFirst()
+        val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
+        val id = cursor.getLong(fieldIndex)
+        val imageUri =
+            ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+        imageView.setImageURI(imageUri)
 
 
         start_button.setOnClickListener {
 
             if (cursor!!.moveToNext()) {
-                //               do {
                 // indexからIDを取得し、そのIDから画像のURIを取得する
                 val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
                 val id = cursor.getLong(fieldIndex)
                 val imageUri =
                     ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
-
-                Log.d("ANDROID1", "URI : " + imageUri.toString())
+                Log.d("ANDROID1", "URI : " + id.toString())
                 imageView.setImageURI(imageUri)
 
-                //               } while (cursor.moveToNext())
             } else {
                 cursor.moveToFirst()
                 val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
                 val id = cursor.getLong(fieldIndex)
                 val imageUri =
                     ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
-
-                Log.d("ANDROID1", "URI : " + imageUri.toString())
+                Log.d("ANDROID1", "URI : " + id.toString())
                 imageView.setImageURI(imageUri)
             }
 
             back_button.setOnClickListener {
 
                 if (cursor!!.moveToPrevious()) {
-                    //               do {
                     // indexからIDを取得し、そのIDから画像のURIを取得する
                     val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
                     val id = cursor.getLong(fieldIndex)
                     val imageUri =
                         ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
-
-                    Log.d("ANDROID1", "URI : " + imageUri.toString())
+                    Log.d("ANDROID1", "URI : " + id.toString())
                     imageView.setImageURI(imageUri)
 
-                    //               } while (cursor.moveToNext())
                 } else {
                     cursor.moveToLast()
                     val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
                     val id = cursor.getLong(fieldIndex)
                     val imageUri =
                         ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
-
-                    Log.d("ANDROID1", "URI : " + imageUri.toString())
+                    Log.d("ANDROID1", "URI : " + id.toString())
                     imageView.setImageURI(imageUri)
                 }
 
             }
 
+            var mTimer: Timer?=null
+            var mHandler=Handler()
+
+
             ms_button.setOnClickListener {
-                start_button.callOnClick()
-
-
+            mTimer = Timer()
+            mTimer!!.schedule(object:TimerTask() {
+                override fun run() {
+                    mHandler.post {
+                            for (i in 1..10)
+                                start_button.callOnClick()
+                        imageView.setImageURI(imageUri)
+                              }
+                    }
+                },2000,2000)
             }
-
         }
     }
 }

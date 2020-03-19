@@ -66,11 +66,12 @@ class MainActivity : AppCompatActivity(){
         )
 
         cursor!!.moveToFirst()
-        val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
-        val id = cursor.getLong(fieldIndex)
-        val imageUri =
-            ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
-        imageView.setImageURI(imageUri)
+            val fieldIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID)
+            val id = cursor.getLong(fieldIndex)
+            val imageUri =
+                ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+            Log.d("ANDROID1", "URI : " + id.toString())
+            imageView.setImageURI(imageUri)
 
 
         start_button.setOnClickListener {
@@ -123,6 +124,10 @@ class MainActivity : AppCompatActivity(){
 
 
             ms_button.setOnClickListener {
+            if (mTimer == null) {
+                ms_button.text = "停止"
+                start_button.isEnabled = false
+                back_button.isEnabled = false
             mTimer = Timer()
             mTimer!!.schedule(object:TimerTask() {
                 override fun run() {
@@ -131,6 +136,16 @@ class MainActivity : AppCompatActivity(){
                               }
                     }
                 },2000,2000)
+            } else {
+                mTimer!!.cancel()
+
+                ms_button.text = "再生"
+                start_button.isEnabled = true
+                back_button.isEnabled = true
+
+                mTimer!!.cancel()
+                mTimer = null
             }
         }
     }
+}

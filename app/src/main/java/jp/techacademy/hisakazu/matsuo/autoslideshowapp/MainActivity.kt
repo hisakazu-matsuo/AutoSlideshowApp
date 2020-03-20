@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import android.content.ContentUris
 import android.os.Handler
 import android.widget.ImageView
+import android.widget.Toast
 import jp.techacademy.hisakazu.matsuo.autoslideshowapp.R
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -27,9 +28,11 @@ class MainActivity : AppCompatActivity(){
             // パーミッションの許可状態を確認する
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 // 許可されている
+                Log.d("ANDROID2", "許可されている")
                 getContentsInfo()
             } else {
                 // 許可されていないので許可ダイアログを表示する
+                Log.d("ANDROID2", "許可されていない")
                 requestPermissions(
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                     PERMISSIONS_REQUEST_CODE
@@ -49,7 +52,11 @@ class MainActivity : AppCompatActivity(){
         when (requestCode) {
             PERMISSIONS_REQUEST_CODE ->
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("ANDROID2", "許可された")
                     getContentsInfo()
+                }else{
+                    Log.d("ANDROID2", "許可されなかった")
+                    Toast.makeText(applicationContext, "終了してください", Toast.LENGTH_SHORT).show();
                 }
         }
     }

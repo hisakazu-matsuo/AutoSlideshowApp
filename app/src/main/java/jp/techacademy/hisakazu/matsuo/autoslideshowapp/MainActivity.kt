@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(){
             PERMISSIONS_REQUEST_CODE ->
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.d("ANDROID2", "許可された")
-                    getContentsInfo()
+
                 }else{
                     Log.d("ANDROID2", "許可されなかった")
                     Toast.makeText(applicationContext, "終了してください", Toast.LENGTH_SHORT).show();
